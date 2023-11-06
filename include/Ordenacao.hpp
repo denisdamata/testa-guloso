@@ -5,8 +5,16 @@
 
 #include <vector>
 
-void bubbleSort(std::vector<int>& permutacao);
-void selectionSort(std::vector<int>& permutacao);
-// Adicione outras declarações de funções de ordenação, se necessário
+class Ordenacao {
+public:
+    static void bubbleSort(std::vector<int>& permutacao);
+    static void selectionSort(std::vector<int>& permutacao);
+    static void insertionSort(std::vector<int>& permutacao);
+    static void quicksort(std::vector<int>& permutacao);
+    static void mergesort(std::vector<int>& permutacao);
+    static void heapsort(std::vector<int>& permutacao);
+    static void spiralSort(std::vector<int>& permutacao);
+};
 
-#endif // ORDENACAO_HPP
+#endif
+

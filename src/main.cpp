@@ -2,26 +2,11 @@
 
 #include "Grafo.hpp"
 #include "Ordenacao.hpp"
-#include "MeuMetodoOrdenacao.hpp"
+#include "Guloso.hpp"  // Adicione esta linha
 #include <iostream>
 #include <vector>
 
-bool verificaColoracaoGulosa(const Grafo& grafo, const std::vector<int>& permutacao, const std::vector<int>& cores) {
-    for (int i = 0; i < permutacao.size(); ++i) {
-        int vertice = permutacao[i];
-        int corAtual = cores[vertice];
-
-        // Verifica se algum vizinho tem a mesma cor
-        for (int vizinho : grafo.obterVizinhos(vertice)) {
-            if (cores[vizinho] == corAtual) {
-                return false; // Coloração não é gulosa
-            }
-        }
-    }
-    return true; // Coloração é gulosa
-}
-
-int main() {
+int main(int argc, char *argv[]) {
     // Leitura dos dados
     char metodoOrdenacao;
     int numVertices;
@@ -57,13 +42,22 @@ int main() {
     // Escolher e chamar o método de ordenação
     switch (metodoOrdenacao) {
         case 'b':
-            bubbleSort(permutacao);
+            Ordenacao::bubbleSort(permutacao);
             break;
         case 's':
-            selectionSort(permutacao);
+            Ordenacao::selectionSort(permutacao);
             break;
-        case 'y':
-            meuMetodoOrdenacao(permutacao);
+        case 'i':
+            Ordenacao::insertionSort(permutacao);
+            break;
+        case 'q':
+            Ordenacao::quicksort(permutacao);
+            break;
+        case 'm':
+            Ordenacao::mergesort(permutacao);
+            break;
+        case 'p':
+            Ordenacao::heapsort(permutacao);
             break;
         // Adicione outros casos de ordenação, se necessário
         default:
@@ -72,7 +66,7 @@ int main() {
     }
 
     // Verificar se a coloração é gulosa
-    bool resultado = verificaColoracaoGulosa(grafo, permutacao, cores);
+    bool resultado = Guloso::testeGulosidade(grafo, permutacao, cores);  // Chamada da função testeGulosidade
 
     // Imprimir o resultado
     if (resultado) {
