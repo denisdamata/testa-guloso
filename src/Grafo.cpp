@@ -1,11 +1,12 @@
 // src/Grafo.cpp
 
 #include "Grafo.hpp"
+#include <cstdlib>  // Incluindo a biblioteca para usar malloc
 
-Grafo::Grafo(int numVertices) : numVertices(numVertices) { 
-    listaAdjacencia = new int[numVertices * numVertices]; // Usando um array unidimensional para armazenar as arestas.
+Grafo::Grafo(int numVertices) : numVertices(numVertices) {
+    listaAdjacencia = (int*)malloc(numVertices * numVertices * sizeof(int));  // Usando malloc para alocar memória dinamicamente
     for (int i = 0; i < numVertices * numVertices; ++i) {
-        listaAdjacencia[i] = -1; // Inicializando com -1 para indicar ausência de aresta.
+        listaAdjacencia[i] = -1;  // Inicializando com -1 para indicar ausência de aresta.
     }
 }
 

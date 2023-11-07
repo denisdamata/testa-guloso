@@ -4,9 +4,9 @@
 #include "Guloso.hpp"
 #include <cstdlib>  // Para usar a função malloc
 
-bool Guloso::testeGulosidade(const Grafo& grafo, const int* permutacao, const int* cores) {
+bool Guloso::testeGulosidade(const Grafo& grafo, const int* arranjoCores, const int* cores) {
     for (int i = 0; i < grafo.obterNumVertices(); ++i) {
-        int vertice = permutacao[i];
+        int vertice = arranjoCores[i];
         int corAtual = cores[vertice];
 
         // Verifica se algum vizinho tem a mesma cor

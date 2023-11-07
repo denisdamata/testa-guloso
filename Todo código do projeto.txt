@@ -63,7 +63,7 @@ private:
 
 class Guloso {
 public:
-    static bool testeGulosidade(const Grafo& grafo, const std::vector<int>& permutacao, const std::vector<int>& cores);
+    static bool testeGulosidade(const Grafo& grafo, const std::vector<int>& arranjoCores, const std::vector<int>& cores);
 };
 
 #endif // GULOSO_HPP
@@ -76,13 +76,13 @@ public:
 
 class Ordenacao {
 public:
-    static void bubbleSort(std::vector<int>& permutacao);
-    static void selectionSort(std::vector<int>& permutacao);
-    static void insertionSort(std::vector<int>& permutacao);
-    static void quicksort(std::vector<int>& permutacao);
-    static void mergesort(std::vector<int>& permutacao);
-    static void heapsort(std::vector<int>& permutacao);
-    static void spiralSort(std::vector<int>& permutacao);
+    static void bubbleSort(std::vector<int>& arranjoCores);
+    static void selectionSort(std::vector<int>& arranjoCores);
+    static void insertionSort(std::vector<int>& arranjoCores);
+    static void quicksort(std::vector<int>& arranjoCores);
+    static void mergesort(std::vector<int>& arranjoCores);
+    static void heapsort(std::vector<int>& arranjoCores);
+    static void spiralSort(std::vector<int>& arranjoCores);
 };
 
 #endif
@@ -103,8 +103,8 @@ const std::vector<int>& Grafo::obterVizinhos(int vertice) const {
 }
 #include "Guloso.hpp"
 
-bool Guloso::testeGulosidade(const Grafo& grafo, const std::vector<int>& permutacao, const std::vector<int>& cores) {
-    for (int vertice : permutacao) {
+bool Guloso::testeGulosidade(const Grafo& grafo, const std::vector<int>& arranjoCores, const std::vector<int>& cores) {
+    for (int vertice : arranjoCores) {
         int corAtual = cores[vertice];
 
         // Verifica se algum vizinho tem a mesma cor
@@ -168,30 +168,30 @@ int main(int argc, char *argv[]) {
     }
 
     // Inicializar vetor de permutação
-    std::vector<int> permutacao(numVertices);
+    std::vector<int> arranjoCores(numVertices);
     for (int i = 0; i < numVertices; ++i) {
-        permutacao[i] = i;
+        arranjoCores[i] = i;
     }
 
     // Escolher e chamar o método de ordenação
     switch (metodoOrdenacao) {
         case 'b':
-            Ordenacao::bubbleSort(permutacao);
+            Ordenacao::bubbleSort(arranjoCores);
             break;
         case 's':
-            Ordenacao::selectionSort(permutacao);
+            Ordenacao::selectionSort(arranjoCores);
             break;
         case 'i':
-            Ordenacao::insertionSort(permutacao);
+            Ordenacao::insertionSort(arranjoCores);
             break;
         case 'q':
-            Ordenacao::quicksort(permutacao);
+            Ordenacao::quicksort(arranjoCores);
             break;
         case 'm':
-            Ordenacao::mergesort(permutacao);
+            Ordenacao::mergesort(arranjoCores);
             break;
         case 'p':
-            Ordenacao::heapsort(permutacao);
+            Ordenacao::heapsort(arranjoCores);
             break;
         // Adicione outros casos de ordenação, se necessário
         default:
@@ -200,12 +200,12 @@ int main(int argc, char *argv[]) {
     }
 
     // Verificar se a coloração é gulosa
-    bool resultado = Guloso::testeGulosidade(grafo, permutacao, cores);  // Chamada da função testeGulosidade
+    bool resultado = Guloso::testeGulosidade(grafo, arranjoCores, cores);  // Chamada da função testeGulosidade
 
     // Imprimir o resultado
     if (resultado) {
         std::cout << "1";
-        for (int i : permutacao) {
+        for (int i : arranjoCores) {
             std::cout << " " << i;
         }
         std::cout << std::endl;
@@ -220,87 +220,87 @@ int main(int argc, char *argv[]) {
 #include "Ordenacao.hpp"
 #include <algorithm>
 
-void Ordenacao::bubbleSort(std::vector<int>& permutacao) {
-    int n = permutacao.size();
+void Ordenacao::bubbleSort(std::vector<int>& arranjoCores) {
+    int n = arranjoCores.size();
     for (int i = 0; i < n - 1; ++i) {
         for (int j = 0; j < n - i - 1; ++j) {
-            if (permutacao[j] > permutacao[j + 1]) {
-                std::swap(permutacao[j], permutacao[j + 1]);
+            if (arranjoCores[j] > arranjoCores[j + 1]) {
+                std::swap(arranjoCores[j], arranjoCores[j + 1]);
             }
         }
     }
 }
 
-void Ordenacao::selectionSort(std::vector<int>& permutacao) {
-    int n = permutacao.size();
+void Ordenacao::selectionSort(std::vector<int>& arranjoCores) {
+    int n = arranjoCores.size();
     for (int i = 0; i < n - 1; ++i) {
         int minIndex = i;
         for (int j = i + 1; j < n; ++j) {
-            if (permutacao[j] < permutacao[minIndex]) {
+            if (arranjoCores[j] < arranjoCores[minIndex]) {
                 minIndex = j;
             }
         }
-        std::swap(permutacao[i], permutacao[minIndex]);
+        std::swap(arranjoCores[i], arranjoCores[minIndex]);
     }
 }
 
-void Ordenacao::insertionSort(std::vector<int>& permutacao) {
-    int n = permutacao.size();
+void Ordenacao::insertionSort(std::vector<int>& arranjoCores) {
+    int n = arranjoCores.size();
     for (int i = 1; i < n; ++i) {
-        int key = permutacao[i];
+        int key = arranjoCores[i];
         int j = i - 1;
 
-        while (j >= 0 && permutacao[j] > key) {
-            permutacao[j + 1] = permutacao[j];
+        while (j >= 0 && arranjoCores[j] > key) {
+            arranjoCores[j + 1] = arranjoCores[j];
             --j;
         }
 
-        permutacao[j + 1] = key;
+        arranjoCores[j + 1] = key;
     }
 }
 
 namespace {
 
-void quicksortImpl(std::vector<int>& permutacao, int low, int high) {
+void quicksortImpl(std::vector<int>& arranjoCores, int low, int high) {
     if (low < high) {
-        int pivot = permutacao[high];
+        int pivot = arranjoCores[high];
         int i = low - 1;
 
         for (int j = low; j < high; ++j) {
-            if (permutacao[j] < pivot) {
+            if (arranjoCores[j] < pivot) {
                 ++i;
-                std::swap(permutacao[i], permutacao[j]);
+                std::swap(arranjoCores[i], arranjoCores[j]);
             }
         }
 
-        std::swap(permutacao[i + 1], permutacao[high]);
+        std::swap(arranjoCores[i + 1], arranjoCores[high]);
         int partitionIndex = i + 1;
 
-        quicksortImpl(permutacao, low, partitionIndex - 1);
-        quicksortImpl(permutacao, partitionIndex + 1, high);
+        quicksortImpl(arranjoCores, low, partitionIndex - 1);
+        quicksortImpl(arranjoCores, partitionIndex + 1, high);
     }
 }
 
 }
 
-void Ordenacao::quicksort(std::vector<int>& permutacao) {
+void Ordenacao::quicksort(std::vector<int>& arranjoCores) {
     int low = 0;
-    int high = permutacao.size() - 1;
-    quicksortImpl(permutacao, low, high);
+    int high = arranjoCores.size() - 1;
+    quicksortImpl(arranjoCores, low, high);
 }
 
 namespace {
 
-void merge(std::vector<int>& permutacao, int l, int m, int r) {
+void merge(std::vector<int>& arranjoCores, int l, int m, int r) {
     int n1 = m - l + 1;
     int n2 = r - m;
 
     std::vector<int> L(n1), R(n2);
 
     for (int i = 0; i < n1; ++i)
-        L[i] = permutacao[l + i];
+        L[i] = arranjoCores[l + i];
     for (int j = 0; j < n2; ++j)
-        R[j] = permutacao[m + 1 + j];
+        R[j] = arranjoCores[m + 1 + j];
 
     int i = 0;
     int j = 0;
@@ -308,116 +308,116 @@ void merge(std::vector<int>& permutacao, int l, int m, int r) {
 
     while (i < n1 && j < n2) {
         if (L[i] <= R[j]) {
-            permutacao[k] = L[i];
+            arranjoCores[k] = L[i];
             ++i;
         } else {
-            permutacao[k] = R[j];
+            arranjoCores[k] = R[j];
             ++j;
         }
         ++k;
     }
 
     while (i < n1) {
-        permutacao[k] = L[i];
+        arranjoCores[k] = L[i];
         ++i;
         ++k;
     }
 
     while (j < n2) {
-        permutacao[k] = R[j];
+        arranjoCores[k] = R[j];
         ++j;
         ++k;
     }
 }
 
-void mergesortImpl(std::vector<int>& permutacao, int l, int r) {
+void mergesortImpl(std::vector<int>& arranjoCores, int l, int r) {
     if (l < r) {
         int m = l + (r - l) / 2;
 
-        mergesortImpl(permutacao, l, m);
-        mergesortImpl(permutacao, m + 1, r);
+        mergesortImpl(arranjoCores, l, m);
+        mergesortImpl(arranjoCores, m + 1, r);
 
-        merge(permutacao, l, m, r);
+        merge(arranjoCores, l, m, r);
     }
 }
 
 }
 
-void Ordenacao::mergesort(std::vector<int>& permutacao) {
+void Ordenacao::mergesort(std::vector<int>& arranjoCores) {
     int l = 0;
-    int r = permutacao.size() - 1;
-    mergesortImpl(permutacao, l, r);
+    int r = arranjoCores.size() - 1;
+    mergesortImpl(arranjoCores, l, r);
 }
 
 namespace {
 
-void heapify(std::vector<int>& permutacao, int n, int i) {
+void heapify(std::vector<int>& arranjoCores, int n, int i) {
     int largest = i;
     int left = 2 * i + 1;
     int right = 2 * i + 2;
 
-    if (left < n && permutacao[left] > permutacao[largest])
+    if (left < n && arranjoCores[left] > arranjoCores[largest])
         largest = left;
 
-    if (right < n && permutacao[right] > permutacao[largest])
+    if (right < n && arranjoCores[right] > arranjoCores[largest])
         largest = right;
 
     if (largest != i) {
-        std::swap(permutacao[i], permutacao[largest]);
+        std::swap(arranjoCores[i], arranjoCores[largest]);
 
-        heapify(permutacao, n, largest);
+        heapify(arranjoCores, n, largest);
     }
 }
 
 }
 
-void Ordenacao::heapsort(std::vector<int>& permutacao) {
-    int n = permutacao.size();
+void Ordenacao::heapsort(std::vector<int>& arranjoCores) {
+    int n = arranjoCores.size();
 
     for (int i = n / 2 - 1; i >= 0; --i)
-        heapify(permutacao, n, i);
+        heapify(arranjoCores, n, i);
 
     for (int i = n - 1; i > 0; --i) {
-        std::swap(permutacao[0], permutacao[i]);
+        std::swap(arranjoCores[0], arranjoCores[i]);
 
-        heapify(permutacao, i, 0);
+        heapify(arranjoCores, i, 0);
     }
 }
 
-void Ordenacao::spiralSort(std::vector<int>& permutacao) {
-    int n = permutacao.size();
+void Ordenacao::spiralSort(std::vector<int>& arranjoCores) {
+    int n = arranjoCores.size();
     int left = 0, right = n - 1, top = 0, bottom = n - 1;
     int direction = 0;
 
     while (left <= right && top <= bottom) {
         if (direction == 0) { // Mover para a direita
             for (int i = left; i <= right; ++i) {
-                if (i < right && permutacao[i] > permutacao[i + 1]) {
-                    std::swap(permutacao[i], permutacao[i + 1]);
+                if (i < right && arranjoCores[i] > arranjoCores[i + 1]) {
+                    std::swap(arranjoCores[i], arranjoCores[i + 1]);
                 }
             }
             top++;
             direction = 1;
         } else if (direction == 1) { // Mover para baixo
             for (int i = top; i <= bottom; ++i) {
-                if (i < bottom && permutacao[i] > permutacao[i + 1]) {
-                    std::swap(permutacao[i], permutacao[i + 1]);
+                if (i < bottom && arranjoCores[i] > arranjoCores[i + 1]) {
+                    std::swap(arranjoCores[i], arranjoCores[i + 1]);
                 }
             }
             right--;
             direction = 2;
         } else if (direction == 2) { // Mover para a esquerda
             for (int i = right; i >= left; --i) {
-                if (i > left && permutacao[i] < permutacao[i - 1]) {
-                    std::swap(permutacao[i], permutacao[i - 1]);
+                if (i > left && arranjoCores[i] < arranjoCores[i - 1]) {
+                    std::swap(arranjoCores[i], arranjoCores[i - 1]);
                 }
             }
             bottom--;
             direction = 3;
         } else if (direction == 3) { // Mover para cima
             for (int i = bottom; i >= top; --i) {
-                if (i > top && permutacao[i] < permutacao[i - 1]) {
-                    std::swap(permutacao[i], permutacao[i - 1]);
+                if (i > top && arranjoCores[i] < arranjoCores[i - 1]) {
+                    std::swap(arranjoCores[i], arranjoCores[i - 1]);
                 }
             }
             left++;

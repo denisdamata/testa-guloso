@@ -1,7 +1,8 @@
 // src/main.cpp
 
-// Arquivo principal. 
-// É o arquivo que está no topo do programa, então se for ler o programa de cima para baixo, o leitor deve começar por aqui. Começar a leitura por aqui é bom para ter uma ideia geral e modularizada do programa, mas não é bom para  ter uma visão detalhada. 
+// Arquivo principal.
+// É o arquivo que está no topo do programa, então se for ler o programa de cima para baixo, o leitor deve começar por aqui. 
+// Começar a leitura por aqui é bom para ter uma ideia geral e modularizada do programa, mas não é bom para ter uma visão detalhada.
 
 #include "Grafo.hpp"
 #include "Ordenacao.hpp"
@@ -37,47 +38,47 @@ int main(int argc, char* argv[]) {
     }
 
     // Inicializar vetor de permutação
-    int* permutacao = static_cast<int*>(malloc(numVertices * sizeof(int)));
+    int* arranjoCores = static_cast<int*>(malloc(numVertices * sizeof(int)));
     for (int i = 0; i < numVertices; ++i) {
-        permutacao[i] = i;
+        arranjoCores[i] = i;
     }
 
     // Escolher e chamar o método de ordenação
     switch (metodoOrdenacao) {
     case 'b':
-        Ordenacao::bubbleSort(permutacao, numVertices);
+        Ordenacao::bubbleSort(arranjoCores, numVertices);
         break;
     case 's':
-        Ordenacao::selectionSort(permutacao, numVertices);
+        Ordenacao::selectionSort(arranjoCores, numVertices);
         break;
     case 'i':
-        Ordenacao::insertionSort(permutacao, numVertices);
+        Ordenacao::insertionSort(arranjoCores, numVertices);
         break;
     case 'q':
-        Ordenacao::quicksort(permutacao, numVertices);
+        Ordenacao::quicksort(arranjoCores, numVertices);
         break;
     case 'm':
-        Ordenacao::mergesort(permutacao, numVertices);
+        Ordenacao::mergesort(arranjoCores, numVertices);
         break;
     case 'p':
-        Ordenacao::heapsort(permutacao, numVertices);
+        Ordenacao::heapsort(arranjoCores, numVertices);
         break;
     // Adicione outros casos de ordenação, se necessário
     default:
         std::cerr << "Método de ordenação inválido" << std::endl;
         free(cores);
-        free(permutacao);
+        free(arranjoCores);
         return 1;
     }
 
     // Verificar se a coloração é gulosa
-    bool resultado = Guloso::testeGulosidade(grafo, permutacao, cores);  // Chamada da função testeGulosidade
+    bool resultado = Guloso::testeGulosidade(grafo, arranjoCores, cores);  // Chamada da função testeGulosidade
 
     // Imprimir o resultado
     if (resultado) {
         std::cout << "1";
         for (int i = 0; i < numVertices; ++i) {
-            std::cout << " " << permutacao[i];
+            std::cout << " " << arranjoCores[i];
         }
         std::cout << std::endl;
     } else {
@@ -86,7 +87,7 @@ int main(int argc, char* argv[]) {
 
     // Liberar memória alocada dinamicamente
     free(cores);
-    free(permutacao);
+    free(arranjoCores);
 
     return 0;
 }
