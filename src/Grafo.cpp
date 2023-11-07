@@ -2,13 +2,29 @@
 
 #include "Grafo.hpp"
 
-Grafo::Grafo(int numVertices) : numVertices(numVertices), listaAdjacencia(numVertices) {}
-
-void Grafo::adicionarAresta(int u, int v) {
-    listaAdjacencia[u].push_back(v);
-    listaAdjacencia[v].push_back(u);
+Grafo::Grafo(int numVertices) : numVertices(numVertices) { 
+    listaAdjacencia = new int[numVertices * numVertices]; // Usando um array unidimensional para armazenar as arestas.
+    for (int i = 0; i < numVertices * numVertices; ++i) {
+        listaAdjacencia[i] = -1; // Inicializando com -1 para indicar ausência de aresta.
+    }
 }
 
-const std::vector<int>& Grafo::obterVizinhos(int vertice) const {
-    return listaAdjacencia[vertice];
+void Grafo::adicionarAresta(int u, int v) {
+    // Encontrar o primeiro elemento não utilizado na linha de u
+    int i = u * numVertices;
+    while (listaAdjacencia[i] != -1) {
+        ++i;
+    }
+    listaAdjacencia[i] = v;
+
+    // Encontrar o primeiro elemento não utilizado na linha de v
+    int j = v * numVertices;
+    while (listaAdjacencia[j] != -1) {
+        ++j;
+    }
+    listaAdjacencia[j] = u;
+}
+
+const int* Grafo::obterVizinhos(int vertice) const {
+    return &listaAdjacencia[vertice * numVertices];
 }

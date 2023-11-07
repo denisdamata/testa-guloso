@@ -1,10 +1,8 @@
 // src/Ordenacao.cpp
 
 #include "Ordenacao.hpp"
-#include <algorithm>
 
-void Ordenacao::bubbleSort(std::vector<int>& permutacao) {
-    int n = permutacao.size();
+void Ordenacao::bubbleSort(int* permutacao, int n) {
     for (int i = 0; i < n - 1; ++i) {
         for (int j = 0; j < n - i - 1; ++j) {
             if (permutacao[j] > permutacao[j + 1]) {
@@ -14,8 +12,7 @@ void Ordenacao::bubbleSort(std::vector<int>& permutacao) {
     }
 }
 
-void Ordenacao::selectionSort(std::vector<int>& permutacao) {
-    int n = permutacao.size();
+void Ordenacao::selectionSort(int* permutacao, int n) {
     for (int i = 0; i < n - 1; ++i) {
         int minIndex = i;
         for (int j = i + 1; j < n; ++j) {
@@ -27,8 +24,7 @@ void Ordenacao::selectionSort(std::vector<int>& permutacao) {
     }
 }
 
-void Ordenacao::insertionSort(std::vector<int>& permutacao) {
-    int n = permutacao.size();
+void Ordenacao::insertionSort(int* permutacao, int n) {
     for (int i = 1; i < n; ++i) {
         int key = permutacao[i];
         int j = i - 1;
@@ -44,7 +40,7 @@ void Ordenacao::insertionSort(std::vector<int>& permutacao) {
 
 namespace {
 
-void quicksortImpl(std::vector<int>& permutacao, int low, int high) {
+void quicksortImpl(int* permutacao, int low, int high) {
     if (low < high) {
         int pivot = permutacao[high];
         int i = low - 1;
@@ -66,19 +62,20 @@ void quicksortImpl(std::vector<int>& permutacao, int low, int high) {
 
 }
 
-void Ordenacao::quicksort(std::vector<int>& permutacao) {
+void Ordenacao::quicksort(int* permutacao, int n) {
     int low = 0;
-    int high = permutacao.size() - 1;
+    int high = n - 1;
     quicksortImpl(permutacao, low, high);
 }
 
 namespace {
 
-void merge(std::vector<int>& permutacao, int l, int m, int r) {
+void merge(int* permutacao, int l, int m, int r) {
     int n1 = m - l + 1;
     int n2 = r - m;
 
-    std::vector<int> L(n1), R(n2);
+    int* L = (int*)malloc(n1 * sizeof(int));
+    int* R = (int*)malloc(n2 * sizeof(int));
 
     for (int i = 0; i < n1; ++i)
         L[i] = permutacao[l + i];
@@ -111,9 +108,12 @@ void merge(std::vector<int>& permutacao, int l, int m, int r) {
         ++j;
         ++k;
     }
+
+    free(L);
+    free(R);
 }
 
-void mergesortImpl(std::vector<int>& permutacao, int l, int r) {
+void mergesortImpl(int* permutacao, int l, int r) {
     if (l < r) {
         int m = l + (r - l) / 2;
 
@@ -126,15 +126,15 @@ void mergesortImpl(std::vector<int>& permutacao, int l, int r) {
 
 }
 
-void Ordenacao::mergesort(std::vector<int>& permutacao) {
+void Ordenacao::mergesort(int* permutacao, int n) {
     int l = 0;
-    int r = permutacao.size() - 1;
+    int r = n - 1;
     mergesortImpl(permutacao, l, r);
 }
 
 namespace {
 
-void heapify(std::vector<int>& permutacao, int n, int i) {
+void heapify(int* permutacao, int n, int i) {
     int largest = i;
     int left = 2 * i + 1;
     int right = 2 * i + 2;
@@ -154,9 +154,7 @@ void heapify(std::vector<int>& permutacao, int n, int i) {
 
 }
 
-void Ordenacao::heapsort(std::vector<int>& permutacao) {
-    int n = permutacao.size();
-
+void Ordenacao::heapsort(int* permutacao, int n) {
     for (int i = n / 2 - 1; i >= 0; --i)
         heapify(permutacao, n, i);
 
@@ -167,8 +165,7 @@ void Ordenacao::heapsort(std::vector<int>& permutacao) {
     }
 }
 
-void Ordenacao::spiralSort(std::vector<int>& permutacao) {
-    int n = permutacao.size();
+void Ordenacao::spiralSort(int* permutacao, int n) {
     int left = 0, right = n - 1, top = 0, bottom = n - 1;
     int direction = 0;
 
@@ -208,6 +205,3 @@ void Ordenacao::spiralSort(std::vector<int>& permutacao) {
         }
     }
 }
-
-
-

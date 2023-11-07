@@ -3,18 +3,16 @@
 #ifndef ORDENACAO_HPP
 #define ORDENACAO_HPP
 
-#include <vector>
-
 class Ordenacao {
 public:
-    static void bubbleSort(std::vector<int>& permutacao);
-    static void selectionSort(std::vector<int>& permutacao);
-    static void insertionSort(std::vector<int>& permutacao);
-    static void quicksort(std::vector<int>& permutacao);
-    static void mergesort(std::vector<int>& permutacao);
-    static void heapsort(std::vector<int>& permutacao);
-    static void spiralSort(std::vector<int>& permutacao);
+    static void bubbleSort(int* permutacao, int tamanho);
+    static void selectionSort(int* permutacao, int tamanho);
+    static void insertionSort(int* permutacao, int tamanho);
+    static void quicksort(int* permutacao, int tamanho);
+    static void mergesort(int* permutacao, int tamanho);
+    static void heapsort(int* permutacao, int tamanho);
+    static void spiralSort(int* permutacao, int tamanho);
 };
 
 #endif
-
+z
